@@ -1,0 +1,50 @@
+import marcas.*
+import carpas.*
+import personas.*
+
+describe "Requerimiento 1" {
+
+	const brahma = new CervezaRubia(lupulo = 4, pais = belgica, graduacion = 2, precio = 180)
+	const quilmes = new CervezaNegra(lupulo = 8, pais = alemania, precio = 200)
+	const carpaBrahma = new Carpa(limiteAdmicion = 2, marca = brahma, recargo = recargoCantidad)
+	const carpaQuilmes = new Carpa(limiteAdmicion = 3, tieneBandaDeMusica = true, marca = quilmes, recargo = recargoEbriedad)
+	const jarraBrahma1 = new Jarra(capacidad = 10, carpa = carpaBrahma, marca = brahma)
+	const jarraBrahma2 = new Jarra(capacidad = 1, carpa = carpaBrahma, marca = brahma)
+	const jarraQuilmes1 = new Jarra(capacidad = 0.5, carpa = carpaQuilmes, marca = quilmes)
+	const jarraQuilmes2 = new Jarra(capacidad = 0.5, carpa = carpaQuilmes, marca = quilmes)
+	const bruno = new Persona(peso = 100, jarras = [ jarraBrahma1, jarraQuilmes1 ], leGustaMusicaTradicional = true, aguante = 3, pais = alemania)
+	const dilan = new Persona(peso = 54, jarras = [ jarraBrahma2 ], leGustaMusicaTradicional = true, aguante = 2, pais = republicaCheca)
+	const georgi = new Persona(peso = 50, jarras = [ jarraQuilmes2 ], aguante = 2.5, pais = belgica)
+
+	test "Contenido de alcohol Brahma" {
+		assert.equals(0.2, jarraBrahma1.alcohol())
+	}
+
+	test "Contenido de alcohol Quilmes" {
+		assert.equals(0.005, jarraQuilmes1.alcohol())
+	}
+
+	test "Total de alcohol ingerido por Bruno" {
+		assert.equals(0.205, bruno.alcoholIngerido())
+	}
+
+	test "Total de alcohol ingerido por Dilan" {
+		assert.equals(0.02, dilan.alcoholIngerido())
+	}
+
+	test "Total de alcohol ingerido por Georgi" {
+		assert.equals(0.005, georgi.alcoholIngerido())
+	}
+
+	test "Bruno esta borracho" {
+		assert.that(bruno.estaEbrio())
+	}
+
+	test "Dilan no esta borracho" {
+		assert.notThat(dilan.estaEbrio())
+	}
+
+	test "Georgi no esta borracho" {
+		assert.notThat(georgi.estaEbrio())
+	}
+}
